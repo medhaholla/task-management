@@ -5,9 +5,7 @@ import net.javaguides.springboot.entity.Task;
 import net.javaguides.springboot.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -20,4 +18,11 @@ public class TaskController {
         Task savedTask = taskService.createTask(task);
         return new ResponseEntity<>(savedTask , HttpStatus.OK);
     }
+
+    @GetMapping("api/getTask/{id}")
+    public ResponseEntity<Task> getTask(@PathVariable long id){
+        Task task = taskService.getTask(id);
+        return new ResponseEntity<>(task , HttpStatus.OK);
+    }
+
 }

@@ -6,5 +6,6 @@ import org.springframework.stereotype.Service;
 
 public interface TaskService {
     Task createTask(Task task);
+    Task getTask(long id);
 
 }
