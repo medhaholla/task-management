@@ -21,4 +21,17 @@ public class TaskServiceImpl implements TaskService{
     public Task getTask(long id) {
          return taskRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND , "Task not found with id " + id));
     }
+
+    @Override
+    public Task updateTask(Task task) {
+        Task existingTask = taskRepository.findById(task.getId()).get();
+        existingTask.setTitle(task.getTitle());
+        existingTask.setDescription(task.getDescription());
+
+        Task updatedTask = taskRepository.save(existingTask);
+        return updatedTask;
+
+    }
+
+
 }

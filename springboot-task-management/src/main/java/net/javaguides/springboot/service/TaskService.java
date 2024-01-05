@@ -8,4 +8,6 @@ public interface TaskService {
     Task createTask(Task task);
     Task getTask(long id);
 
+    Task updateTask(Task task);
+
 }
