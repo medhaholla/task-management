@@ -2,8 +2,11 @@ package net.javaguides.springboot.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import net.javaguides.springboot.DatabaseOperationException;
 import net.javaguides.springboot.entity.Task;
 import net.javaguides.springboot.repository.TaskRepository;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,8 +44,15 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public void deleteTask(long id) {
-        taskRepository.deleteById(id);
+       if(! taskRepository.existsById(id)){
+           throw new EntityNotFoundException("Task with entity " + id + "not found");
+       }
+       try{
+           taskRepository.deleteById(id);
+       }catch (DataAccessException ex){
+           throw new DatabaseOperationException("Failed to delete task with ID " + id, ex);
+       }
+       }
     }
 
 
-}
